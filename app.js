@@ -24,6 +24,8 @@ const calcular = () => {
   }
 }
 
+
+
 const atualizarDisplay = (texto) => {
   if (novoNumero){
     display.textContent = texto.toLocaleString('BR');
@@ -33,7 +35,11 @@ const atualizarDisplay = (texto) => {
   }
 }
 
-const inserirNumero = (evento) => atualizarDisplay(evento.target.textContent)
+const inserirNumero = (evento) => {
+  if (display.textContent.length < 10){
+    atualizarDisplay(evento.target.textContent)
+  } 
+}
 
 numeros.forEach(numero => numero.addEventListener('click', inserirNumero))
 
@@ -107,15 +113,26 @@ const mapaTeclado = {
   '9' : 'tecla9',
   '9' : 'tecla9',
   '-' : 'operadorSubtrair',
-  '=' : 'igual',
   '*' : 'operadorMultiplicar',
   ',' : 'decimal',
   '/' : 'operadorDivisao',
+  'c' : 'limparDisplay',
+  '=' : 'igual',
+  'Enter' : 'igual',
+  'Backspace' : 'backspace',
+  'Escape' : 'limparCalculo'
+}
+
+const limitarNumeros = () => {
+  if (display.textContent.length < 9) {
+
+  }
 }
 
 const mapearTeclado = (evento) => {
   const tecla = evento.key 
-  document.getElementById(mapaTeclado[tecla]).click();
+  const teclaPermitida = () => Object.keys(mapaTeclado).indexOf(tecla) !== -1
+  if (teclaPermitida()) document.getElementById(mapaTeclado[tecla]).click()
 }
 
 document.addEventListener('keydown', mapearTeclado)
